@@ -1,3 +1,4 @@
+language: generic
 services:
   - docker
 
@@ -5,7 +6,7 @@ before_install:
   - docker build -t tbheng/react-test -f ./client/Dockerfile.dev ./client
 
 script:
-  - docker run tbheng/react-test npm run test -- --coverage
+  - docker run -e CI=true tbheng/react-test npm test
 
 after_success:
   - docker build -t tbheng/multi-client ./client
