@@ -1,0 +1,23 @@
+services:
+  - docker
+
+before_install:
+  - docker build -t tbheng/react-test -f ./client/Dockerfile.dev ./client
+
+script:
+  - docker run tbheng/react-test npm run test -- --coverage
+
+after_success:
+  - docker build -t tbheng/multi-client ./client
+  - docker build -t tbheng/multi-nginx ./nginx
+  - docker build -t tbheng/multi-server ./server
+  - docker build -t tbheng/multi-worker ./worker
+
+  # Login to Docker CLI
+  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
+
+  # Push images to Docker Hub
+  - docker push tbheng/multi-client
+  - docker push tbheng/multi-nginx
+  - docker push tbheng/multi-server
+  - docker push tbheng/multi-worker
