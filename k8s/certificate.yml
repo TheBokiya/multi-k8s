@@ -1,0 +1,20 @@
+apiVersion: cert-manager
+kind: Certificate
+metadata:
+  name: k8s-multi-com-tls
+spec:
+  secretName: multi-k8s-timheng-com
+  issuerRef:
+    name: letsencrypt-prod
+    kind: ClusterIssuer
+  commonName: timheng.com
+  dnsNames:
+    - timheng.com
+    - www.timheng.com
+  acme:
+    config:
+      - http01:
+          ingressClass: nginx
+        domains:
+          - timheng.com
+          - www.timheng.com
