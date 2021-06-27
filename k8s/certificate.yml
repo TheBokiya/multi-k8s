@@ -1,4 +1,4 @@
-apiVersion: cert-manager
+apiVersion: cert-manager.io/v1
 kind: Certificate
 metadata:
   name: k8s-multi-com-tls
@@ -11,10 +11,3 @@ spec:
   dnsNames:
     - timheng.com
     - www.timheng.com
-  acme:
-    config:
-      - http01:
-          ingressClass: nginx
-        domains:
-          - timheng.com
-          - www.timheng.com
